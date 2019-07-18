@@ -1,0 +1,7 @@
+[package]
+authors = ["disasm"]
+edition = "2018"
+name = "min-broken"
+version = "0.1.0"
+
+[dependencies]
