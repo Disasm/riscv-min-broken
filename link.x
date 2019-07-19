@@ -20,20 +20,8 @@ PROVIDE(__pre_init = default_pre_init);
 */
 PROVIDE(_mp_hook = default_mp_hook);
 
-PHDRS
-{
-    load PT_LOAD;
-    ram_load PT_LOAD;
-    virtual PT_NULL;
-}
-
 SECTIONS
 {
-  .text.dummy ORIGIN(REGION_TEXT) :
-  {
-    /* This section is intended to make _stext address work */
-  } > REGION_TEXT :virtual
-
   .text _stext :
   {
     /* Put reset handler first in .text section so it ends up as the entry */
@@ -45,7 +33,7 @@ SECTIONS
     KEEP(*(.trap.rust));
 
     *(.text .text.*);
-  } > REGION_TEXT :load
+  } > REGION_TEXT
 
   .rodata : ALIGN(4)
   {
@@ -55,7 +43,7 @@ SECTIONS
        This is required by LLD to ensure the LMA of the following .data
        section will have the correct alignment. */
     . = ALIGN(4);
-  } > REGION_RODATA :load
+  } > REGION_RODATA
 
   .data : ALIGN(4)
   {
@@ -67,7 +55,7 @@ SECTIONS
     *(.data .data.*);
     . = ALIGN(4);
     _edata = .;
-  } > REGION_DATA AT > REGION_RODATA :ram_load
+  } > REGION_DATA AT > REGION_RODATA
 
   .bss (NOLOAD) :
   {
