@@ -18,16 +18,8 @@ pub extern "C" fn start_rust() -> ! {
     unsafe {
         let ptr = consume as *const fn(usize) as usize;
         consume(ptr);
-        main();
     }
-}
 
-#[inline(never)]
-pub fn main() -> ! {
-    unsafe { consume(42); }
-    //let ptr = main as *const u32 as usize;
-//    test_fp();
-    //test_atomics();
     loop {}
 }
 
