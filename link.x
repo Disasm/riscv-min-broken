@@ -22,6 +22,12 @@ PROVIDE(_mp_hook = default_mp_hook);
 
 SECTIONS
 {
+  .text.dummy (NOLOAD) :
+  {
+    /* This section is intended to make _stext address work */
+    . = _stext;
+  } > REGION_TEXT
+
   .text _stext :
   {
     /* Put reset handler first in .text section so it ends up as the entry */
