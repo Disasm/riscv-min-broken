@@ -13,6 +13,8 @@ extern "C" {
 }
 
 static mut BYTE: u8 = 1;
+#[link_section = ".rodata"]
+static mut BYTE_RODATA: u8 = 1;
 
 #[link_section = ".init.rust"]
 #[export_name = "_start_rust"]
@@ -21,6 +23,7 @@ pub extern "C" fn start_rust() -> ! {
         let ptr = consume as *const fn(usize) as usize;
         consume(ptr);
         consume(BYTE as usize);
+        consume(BYTE_RODATA as usize);
     }
 
     loop {}
